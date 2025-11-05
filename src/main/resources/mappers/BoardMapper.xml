@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssg.board_axios_modal.mapper.BoardMapper">
+
+    <resultMap id="BoardMap" type="BoardVO">
+        <id property="bno" column="bno"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="writer" column="writer"/>
+        <result property="regDate" column="reg_date"/>
+        <result property="updateDate" column="update_date"/>
+    </resultMap>
+
+    <select id="getList" resultMap="BoardMap">
+        SELECT bno, title, content, writer, reg_date, update_date
+        FROM test_board
+        ORDER BY bno DESC
+    </select>
+
+    <select id="read" parameterType="int" resultMap="BoardMap">
+        SELECT bno, title, content, writer, reg_date, update_date
+        FROM test_board
+        WHERE bno = #{bno}
+    </select>
+
+    <insert id="insert" parameterType="BoardVO" useGeneratedKeys="true" keyProperty="bno">
+        INSERT INTO test_board (title, content, writer, reg_date)
+        VALUES (#{title}, #{content}, #{writer}, NOW())
+    </insert>
+
+    <update id="update" parameterType="BoardVO">
+        UPDATE test_board
+        SET
+            title = #{title},
+            content = #{content},
+            update_date = NOW()
+        WHERE bno = #{bno}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM test_board
+        WHERE bno = #{bno}
+    </delete>
+
+</mapper>
