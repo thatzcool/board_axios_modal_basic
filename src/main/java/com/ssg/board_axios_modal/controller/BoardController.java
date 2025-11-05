@@ -66,7 +66,6 @@ public class BoardController {
            BoardVO  vo = boardService.get(bno);
            if (vo == null) {
                return ResponseEntity.notFound().build();
-
            }
           return ResponseEntity.ok(vo);
     }
@@ -93,8 +92,8 @@ public class BoardController {
 
 
 
-    // 4. 글 삭제
-    @DeleteMapping("/{bno}")
+    // 4. 글 소프트 삭제
+    @PutMapping("/{bno}:delete")
     public ResponseEntity<BoardVO> deleteBoard(@PathVariable("bno") Integer bno) {
         boolean result = boardService.remove(bno);
         if(!result) {
